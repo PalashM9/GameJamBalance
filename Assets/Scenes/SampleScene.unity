@@ -244,11 +244,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &21939669
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,11 +371,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &76973528
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,11 +560,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &146949880
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,11 +839,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &194657286
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,11 +1171,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1366,7 +1351,7 @@ Transform:
   m_GameObject: {fileID: 350158304}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -9.27615, y: 15.42144, z: -21.19908}
+  m_LocalPosition: {x: -9.27615, y: 15.8, z: -21.19908}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1423,8 +1408,10 @@ MonoBehaviour:
   positivesToPlace: 18
   negativesToPlace: 18
   glassMaterial: {fileID: 2100000, guid: 38020eb0272b15641b470ed5ad38f9f2, type: 2}
-  greenChildMaterial: {fileID: 2100000, guid: dcf9125d58895054aa7113f641ba2439, type: 2}
-  redChildMaterial: {fileID: 2100000, guid: 38f957566b78bd24a95a6405b193239c, type: 2}
+  positiveIconSprite: {fileID: 21300000, guid: 385f167b2d5c4394a8102ef264568d9a, type: 3}
+  negativeIconSprite: {fileID: 21300000, guid: 07179a22a3296d04090db73e3863a999, type: 3}
+  iconSizePercent: 0.6
+  iconYOffset: 0.55
 --- !u!1 &362089544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1550,11 +1537,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &364205338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,11 +1664,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.5
-  timeBetweenFlashes: 2
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,11 +1917,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &497149004
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,11 +2108,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &569655137
 GameObject:
   m_ObjectHideFlags: 0
@@ -2260,11 +2235,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &569895724 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -6689036041284674117, guid: 5b24fcbf727aa0245a8677fd49b2476f, type: 3}
@@ -2516,11 +2488,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1001 &635609450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2703,11 +2672,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &653717187
 GameObject:
   m_ObjectHideFlags: 0
@@ -2936,11 +2902,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &721975000
 GameObject:
   m_ObjectHideFlags: 0
@@ -3066,11 +3029,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &772370323
 GameObject:
   m_ObjectHideFlags: 0
@@ -3196,11 +3156,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3511,11 +3468,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1033056549
 GameObject:
   m_ObjectHideFlags: 0
@@ -3641,11 +3595,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1048098428
 GameObject:
   m_ObjectHideFlags: 0
@@ -3863,11 +3814,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1152418355
 GameObject:
   m_ObjectHideFlags: 0
@@ -3993,11 +3941,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1179406330
 GameObject:
   m_ObjectHideFlags: 0
@@ -4355,11 +4300,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1213646840
 GameObject:
   m_ObjectHideFlags: 0
@@ -4762,11 +4704,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1372653149
 GameObject:
   m_ObjectHideFlags: 0
@@ -5111,11 +5050,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1438776329
 GameObject:
   m_ObjectHideFlags: 0
@@ -5241,11 +5177,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1495165192
 GameObject:
   m_ObjectHideFlags: 0
@@ -5371,11 +5304,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1502693996
 GameObject:
   m_ObjectHideFlags: 0
@@ -5501,11 +5431,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1521616007
 GameObject:
   m_ObjectHideFlags: 0
@@ -5631,11 +5558,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1558015565
 GameObject:
   m_ObjectHideFlags: 0
@@ -6305,11 +6229,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1737595529
 GameObject:
   m_ObjectHideFlags: 0
@@ -6513,11 +6434,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1792678879
 GameObject:
   m_ObjectHideFlags: 0
@@ -6827,11 +6745,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1909979448
 GameObject:
   m_ObjectHideFlags: 0
@@ -6957,11 +6872,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1948471427
 GameObject:
   m_ObjectHideFlags: 0
@@ -7087,11 +6999,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &1998119690
 GameObject:
   m_ObjectHideFlags: 0
@@ -7248,11 +7157,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &2031951848
 GameObject:
   m_ObjectHideFlags: 0
@@ -7378,11 +7284,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &2035812823
 GameObject:
   m_ObjectHideFlags: 0
@@ -7508,11 +7411,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &2070771056
 GameObject:
   m_ObjectHideFlags: 0
@@ -7638,11 +7538,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1 &2082016183
 GameObject:
   m_ObjectHideFlags: 0
@@ -7843,11 +7740,8 @@ MonoBehaviour:
   Value: 0
   IsConsumed: 0
   Description: 
+  iconRenderer: {fileID: 0}
   baseMat: {fileID: 0}
-  positiveMat: {fileID: 0}
-  negativeMat: {fileID: 0}
-  flashVisibleTime: 0.2
-  timeBetweenFlashes: 6
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

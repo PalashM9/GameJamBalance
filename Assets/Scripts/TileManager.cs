@@ -6,9 +6,16 @@ public class TileManager : MonoBehaviour
     public int positivesToPlace = 18;
     public int negativesToPlace = 18;
 
-    public Material glassMaterial;
-    public Material greenChildMaterial;
-    public Material redChildMaterial;
+    [Header("Tile Visuals")]
+    public Material glassMaterial;      
+    public Sprite positiveIconSprite;    // + tile icon
+    public Sprite negativeIconSprite;    // - tile icon
+
+    [Range(0.1f, 1f)]
+    public float iconSizePercent = 0.8f; 
+
+    public float iconYOffset = 0.18f;    
+       
 
     private Tile[] tiles;
 
@@ -59,10 +66,10 @@ public class TileManager : MonoBehaviour
     void Start()
     {
         tiles = GetComponentsInChildren<Tile>();
-        AssignValuesAndDescriptions();
+        AssignValuesAndIcons();
     }
 
-    void AssignValuesAndDescriptions()
+    void AssignValuesAndIcons()
     {
         List<int> values = new List<int>();
 
@@ -72,7 +79,6 @@ public class TileManager : MonoBehaviour
         for (int i = 0; i < negativesToPlace; i++)
             values.Add(-2);
 
-        // shuffle values
         for (int i = values.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
@@ -97,9 +103,6 @@ public class TileManager : MonoBehaviour
                 t.baseMat = glassMaterial;
             }
 
-            t.positiveMat = greenChildMaterial;
-            t.negativeMat = redChildMaterial;
-
             if (v > 0)
             {
                 t.Description = positiveTexts[posLabelIndex % positiveTexts.Length];
@@ -113,9 +116,59 @@ public class TileManager : MonoBehaviour
                 negCount++;
             }
 
-            t.StartBlink();
+            CreateIconForTile(t);
         }
 
         Debug.Log($"RESULT: {posCount} positive tiles, {negCount} negative tiles.");
     }
+
+    void CreateIconForTile(Tile tile)
+    {
+    if (positiveIconSprite == null || negativeIconSprite == null)
+    {
+        Debug.LogWarning("TileManager: positive/negative icon sprites are not assigned.");
+        return;
+    }
+
+    GameObject iconGO = new GameObject("TileIcon");
+    iconGO.transform.SetParent(tile.transform);
+
+    BoxCollider col = tile.GetComponent<BoxCollider>();
+    float width, height, depth;
+
+    if (col != null)
+    {
+        width  = col.size.x * tile.transform.localScale.x;
+        height = col.size.y * tile.transform.localScale.y;
+        depth  = col.size.z * tile.transform.localScale.z;
+    }
+    else
+    {
+        width  = tile.transform.localScale.x;
+        height = tile.transform.localScale.y;
+        depth  = tile.transform.localScale.z;
+    }
+
+    iconGO.transform.localPosition = new Vector3(0f, iconYOffset, 0f);
+
+    iconGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+
+    SpriteRenderer sr = iconGO.AddComponent<SpriteRenderer>();
+    sr.sprite = tile.Value > 0 ? positiveIconSprite : negativeIconSprite;
+    sr.sortingOrder = 10;
+    sr.drawMode = SpriteDrawMode.Simple;
+
+    Vector2 spriteWorldSize = sr.sprite.bounds.size;
+
+    float targetWidth  = width  * iconSizePercent;
+    float targetDepth  = depth  * iconSizePercent;
+
+    float scaleX = targetWidth  / spriteWorldSize.x;
+    float scaleY = targetDepth  / spriteWorldSize.y;
+
+    iconGO.transform.localScale = new Vector3(scaleX, scaleY, 1f);
+
+    tile.iconRenderer = sr;
+    }
+
 }
