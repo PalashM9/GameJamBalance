@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class UIManager : MonoBehaviour
@@ -16,6 +17,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private int blinkTimes = 4;
     [SerializeField] private float blinkInterval = 0.12f;
 
+    [Header("Balance Scale")]
+    [SerializeField] private Image balanceImage;          // UI Image in the panel
+    [SerializeField] private Sprite[] balanceSprites;    
     private Coroutine blinkRoutine;
 
     void Awake()
@@ -28,16 +32,21 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
+    /// <summary>
+    /// Called by PlayerMovement whenever a tile is stepped on.
+    /// </summary>
     public void UpdateScoreUI(Tile tile, int totalScore, int positiveHits, int negativeHits)
     {
         if (tile == null) return;
 
-        // texts
-        lastEventText.text  = tile.Description;
-        lastValueText.text  = tile.Value > 0 ? $"+{tile.Value}" : tile.Value.ToString();
+        // TEXTS
+        lastEventText.text = tile.Description;
+        lastValueText.text = tile.Value > 0 ? $"+{tile.Value}" : tile.Value.ToString();
         totalScoreText.text = $"Score: {totalScore}";
-        positiveCountText.text = $"Positive : {positiveHits}";
-        negativeCountText.text = $"Negative : {negativeHits}";
+        positiveCountText.text = $"+ Tiles: {positiveHits}";
+        negativeCountText.text = $"- Tiles: {negativeHits}";
+
+        UpdateScaleVisual(positiveHits, negativeHits);
 
         if (blinkRoutine != null)
             StopCoroutine(blinkRoutine);
@@ -52,8 +61,8 @@ public class UIManager : MonoBehaviour
         Color baseValue = lastValueText.color;
 
         Color flashColor = positive
-            ? new Color(0.3f, 1f, 0.3f)    // soft green
-            : new Color(1f, 0.3f, 0.3f);   // soft red
+            ? new Color(0.3f, 1f, 0.3f)   // soft green
+            : new Color(1f, 0.3f, 0.3f);  // soft red
 
         for (int i = 0; i < blinkTimes; i++)
         {
@@ -66,8 +75,24 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(blinkInterval);
         }
 
-        // ensure we end on base colors
         lastEventText.color = baseEvent;
         lastValueText.color = baseValue;
+    }
+
+    private void UpdateScaleVisual(int positiveHits, int negativeHits)
+    {
+        if (balanceImage == null || balanceSprites == null || balanceSprites.Length == 0)
+            return;
+
+        int diff = positiveHits - negativeHits;
+
+        // how strong the tilt is (0..4)
+        int magnitude = Mathf.Clamp(Mathf.Abs(diff), 0, balanceSprites.Length - 1);
+
+        balanceImage.sprite = balanceSprites[magnitude];
+
+        float xScale = diff >= 0 ? 1f : -1f;
+        var rt = balanceImage.rectTransform;
+        rt.localScale = new Vector3(xScale, 1f, 1f);
     }
 }
