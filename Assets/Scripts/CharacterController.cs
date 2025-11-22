@@ -5,12 +5,18 @@ public class PlayerMovement : MonoBehaviour
 {
     public float speed = 5f;
     public float gravity = -9.81f;
-    public float jumpHeight = 2f;
+
+    [Header("Jump Settings")]
+    public float jumpHeight = 1.5f;           
+    public float forwardJumpDistance = 1.2f;  // distance between tiles 
+    public float forwardJumpSpeed = 4f;      
 
     private CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
+    private bool isJumpingForward;
 
+    // scoring
     public int totalScore = 0;
     public int positiveHits = 0;
     public int negativeHits = 0;
@@ -28,21 +34,56 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+            isJumpingForward = false;
         }
 
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
+        if (z < 0) z = 0;
 
         Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
 
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (!isJumpingForward)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            controller.Move(move * speed * Time.deltaTime);
         }
 
+        // JUMP
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+
+            bool wantsForward = z > 0.1f; 
+
+            if (wantsForward && !isJumpingForward)
+            {
+                StartCoroutine(ForwardHop());
+            }
+        }
+
+        // gravity
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    private System.Collections.IEnumerator ForwardHop()
+    {
+        isJumpingForward = true;
+
+        Vector3 start = transform.position;
+        Vector3 end = start + transform.forward * forwardJumpDistance;
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime * forwardJumpSpeed;
+            Vector3 newPos = Vector3.Lerp(start, end, t);
+
+            controller.Move(newPos - transform.position);
+            yield return null;
+        }
+
+        isJumpingForward = false;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -52,7 +93,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (tile.IsConsumed) return;
 
-        // mark + stop blinking + lock color
         tile.RevealPermanent();
 
         int value = tile.Value;
@@ -66,7 +106,6 @@ public class PlayerMovement : MonoBehaviour
             $"TotalScore: {totalScore}, +Tiles: {positiveHits}, -Tiles: {negativeHits}"
         );
 
-        // update UI panel
         if (UIManager.Instance != null)
         {
             UIManager.Instance.UpdateScoreUI(tile, totalScore, positiveHits, negativeHits);

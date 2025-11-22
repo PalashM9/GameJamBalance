@@ -42,6 +42,18 @@ public class UIManager : MonoBehaviour
         // TEXTS
         lastEventText.text = tile.Description;
         lastValueText.text = tile.Value > 0 ? $"+{tile.Value}" : tile.Value.ToString();
+
+        if (tile.Value > 0)
+        {
+            lastEventText.color = new Color(0.2f, 1f, 0.2f);   // soft green
+            lastValueText.color = new Color(0.2f, 1f, 0.2f);
+        }
+        else
+        {
+            lastEventText.color = new Color(1f, 0.2f, 0.2f);   // soft red
+            lastValueText.color = new Color(1f, 0.2f, 0.2f);
+        }
+
         totalScoreText.text = $"Score: {totalScore}";
         positiveCountText.text = $"+ Tiles: {positiveHits}";
         negativeCountText.text = $"- Tiles: {negativeHits}";
@@ -56,28 +68,30 @@ public class UIManager : MonoBehaviour
     }
 
     private System.Collections.IEnumerator BlinkTexts(bool positive)
+        
     {
-        Color baseEvent = lastEventText.color;
-        Color baseValue = lastValueText.color;
+            Color baseEvent = lastEventText.color;
+            Color baseValue = lastValueText.color;
 
-        Color flashColor = positive
-            ? new Color(0.3f, 1f, 0.3f)   // soft green
-            : new Color(1f, 0.3f, 0.3f);  // soft red
+            Color flashColor = baseEvent * 1.5f;
+            flashColor.a = 1f;
 
-        for (int i = 0; i < blinkTimes; i++)
-        {
-            lastEventText.color = flashColor;
-            lastValueText.color = flashColor;
-            yield return new WaitForSeconds(blinkInterval);
+            for (int i = 0; i < blinkTimes; i++)
+            {
+                lastEventText.color = flashColor;
+                lastValueText.color = flashColor;
+                yield return new WaitForSeconds(blinkInterval);
+
+                lastEventText.color = baseEvent;
+                lastValueText.color = baseValue;
+                yield return new WaitForSeconds(blinkInterval);
+            }
 
             lastEventText.color = baseEvent;
             lastValueText.color = baseValue;
-            yield return new WaitForSeconds(blinkInterval);
-        }
-
-        lastEventText.color = baseEvent;
-        lastValueText.color = baseValue;
+        
     }
+
 
     private void UpdateScaleVisual(int positiveHits, int negativeHits)
     {
