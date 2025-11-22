@@ -11,7 +11,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
-    // SCORE / COUNTERS
     public int totalScore = 0;
     public int positiveHits = 0;
     public int negativeHits = 0;
@@ -53,7 +52,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (tile.IsConsumed) return;
 
-        tile.RevealPermanent();  
+        // mark + stop blinking + lock color
+        tile.RevealPermanent();
 
         int value = tile.Value;
         totalScore += value;
@@ -65,5 +65,11 @@ public class PlayerMovement : MonoBehaviour
             $"STEPPED ON TILE -> Id: {tile.Id}, Name: {tile.name}, Value: {value} | " +
             $"TotalScore: {totalScore}, +Tiles: {positiveHits}, -Tiles: {negativeHits}"
         );
+
+        // update UI panel
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.UpdateScoreUI(tile, totalScore, positiveHits, negativeHits);
+        }
     }
 }

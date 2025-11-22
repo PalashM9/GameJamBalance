@@ -6,17 +6,18 @@ public class Tile : MonoBehaviour
     public int Id;
     public int Value;
     public bool IsConsumed = false;
+    public string Description;      // <--- NEW
 
     private Renderer rend;
     private Coroutine blinkRoutine;
 
-    [HideInInspector] public Material baseMat;      // Glass
-    [HideInInspector] public Material positiveMat;  // Green
-    [HideInInspector] public Material negativeMat;  // Red
+    [HideInInspector] public Material baseMat;
+    [HideInInspector] public Material positiveMat;
+    [HideInInspector] public Material negativeMat;
 
     [Header("Blink Settings")]
-    public float flashVisibleTime = 0.5f;      // how long it stays colored
-    public float timeBetweenFlashes = 2.0f;    // how long it stays glass before next flash
+    public float flashVisibleTime = 0.5f;
+    public float timeBetweenFlashes = 2.0f;
 
     void Awake()
     {
@@ -24,7 +25,7 @@ public class Tile : MonoBehaviour
 
         if (rend != null && baseMat == null)
         {
-            baseMat = rend.material;          // default = glass material
+            baseMat = rend.material;
         }
     }
 
