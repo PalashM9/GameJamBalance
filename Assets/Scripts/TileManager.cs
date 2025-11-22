@@ -6,6 +6,10 @@ public class TileManager : MonoBehaviour
     public int positivesToPlace = 18;
     public int negativesToPlace = 18;
 
+    public Material glassMaterial;        // GlassMaterial
+    public Material greenChildMaterial;   // GreenChildMaterial
+    public Material redChildMaterial;     // RedChildMaterial
+
     private Tile[] tiles;
 
     void Start()
@@ -24,29 +28,40 @@ public class TileManager : MonoBehaviour
         for (int i = 0; i < negativesToPlace; i++)
             values.Add(-2);
 
-        // Shuffle (Fisher-Yates)
+        // shuffle values
         for (int i = values.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
-            int temp = values[i];
-            values[i] = values[j];
-            values[j] = temp;
+            (values[i], values[j]) = (values[j], values[i]);
         }
 
-        int positiveCount = 0;
-        int negativeCount = 0;
+        int pos = 0;
+        int neg = 0;
 
         for (int i = 0; i < tiles.Length; i++)
         {
-            tiles[i].Id = i;     
+            Tile t = tiles[i];
 
+            t.Id = i;
             int v = values[i];
-            tiles[i].SetValue(v);
+            t.SetValue(v);
 
-            if (v > 0) positiveCount++;
-            else negativeCount++;
+            var rend = t.GetComponent<Renderer>();
+            if (rend != null && glassMaterial != null)
+            {
+                rend.material = glassMaterial; // start as glass
+                t.baseMat = glassMaterial;
+            }
+
+            t.positiveMat = greenChildMaterial;
+            t.negativeMat = redChildMaterial;
+
+            if (v > 0) pos++; else neg++;
+
+            // start blink
+            t.StartBlink();
         }
 
-        Debug.Log($"RESULT: {positiveCount} positive tiles, {negativeCount} negative tiles.");
+        Debug.Log($"RESULT: {pos} positive tiles, {neg} negative tiles.");
     }
 }
