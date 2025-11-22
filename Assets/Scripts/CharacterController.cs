@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
 
+    // SCORE / COUNTERS
     public int totalScore = 0;
     public int positiveHits = 0;
     public int negativeHits = 0;
@@ -48,10 +49,11 @@ public class PlayerMovement : MonoBehaviour
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         Tile tile = hit.collider.GetComponent<Tile>();
-        if (tile == null) return;           
+        if (tile == null) return;
 
-        if (tile.IsConsumed) return;    
-        tile.IsConsumed = true;
+        if (tile.IsConsumed) return;
+
+        tile.RevealPermanent();  
 
         int value = tile.Value;
         totalScore += value;

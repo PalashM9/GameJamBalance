@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections;   // for IEnumerator
+using System.Collections;
 
 public class Tile : MonoBehaviour
 {
@@ -8,11 +8,15 @@ public class Tile : MonoBehaviour
     public bool IsConsumed = false;
 
     private Renderer rend;
+    private Coroutine blinkRoutine;
 
-    // Filled by TileManager
-    [HideInInspector] public Material baseMat;      // GlassMaterial
-    [HideInInspector] public Material positiveMat;  // GreenChildMaterial
-    [HideInInspector] public Material negativeMat;  // RedChildMaterial
+    [HideInInspector] public Material baseMat;      // Glass
+    [HideInInspector] public Material positiveMat;  // Green
+    [HideInInspector] public Material negativeMat;  // Red
+
+    [Header("Blink Settings")]
+    public float flashVisibleTime = 0.5f;      // how long it stays colored
+    public float timeBetweenFlashes = 2.0f;    // how long it stays glass before next flash
 
     void Awake()
     {
@@ -20,7 +24,7 @@ public class Tile : MonoBehaviour
 
         if (rend != null && baseMat == null)
         {
-            baseMat = rend.material;
+            baseMat = rend.material;          // default = glass material
         }
     }
 
@@ -32,26 +36,38 @@ public class Tile : MonoBehaviour
     public void StartBlink()
     {
         if (rend == null) return;
-        StopAllCoroutines();
-        StartCoroutine(BlinkRoutine());
+
+        if (blinkRoutine != null)
+            StopCoroutine(blinkRoutine);
+
+        blinkRoutine = StartCoroutine(BlinkLoop());
     }
 
-    private IEnumerator BlinkRoutine()
+    public void RevealPermanent()
+    {
+        if (rend == null) return;
+
+        IsConsumed = true;
+
+        if (blinkRoutine != null)
+            StopCoroutine(blinkRoutine);
+
+        rend.material = (Value > 0) ? positiveMat : negativeMat;
+    }
+
+    private IEnumerator BlinkLoop()
     {
         Material blinkMat = Value > 0 ? positiveMat : negativeMat;
 
-        int flashes = 4;
-        float flashTime = 0.3f;
-
-        for (int i = 0; i < flashes; i++)
+        while (!IsConsumed)
         {
-            rend.material = blinkMat;      // ON (green or red)
-            yield return new WaitForSeconds(flashTime * 0.5f);
+            rend.material = baseMat;
+            yield return new WaitForSeconds(timeBetweenFlashes);
 
-            rend.material = baseMat;       // OFF (glass)
-            yield return new WaitForSeconds(flashTime * 0.5f);
+            rend.material = blinkMat;
+            yield return new WaitForSeconds(flashVisibleTime);
+
+            rend.material = baseMat;
         }
-
-        rend.material = blinkMat;
     }
 }
