@@ -4,16 +4,16 @@ using UnityEngine;
 public class SupportCube : MonoBehaviour
 {
     [Header("Blinking")]
-    public float blinkSpeed = 2f;   // how fast alpha changes
+    public float blinkSpeed = 2f;     // blink speed
     public float minAlpha = 0.3f;
     public float maxAlpha = 1f;
 
     [Header("Touches")]
-    public int maxTouches = 2;      // after this it disappears
-
+    public int maxTouches = 2;       
     private int touchCount = 0;
     private MeshRenderer rend;
     private Color baseColor;
+    private bool isBreaking = false;  
 
     void Start()
     {
@@ -21,7 +21,6 @@ public class SupportCube : MonoBehaviour
         if (rend != null)
             baseColor = rend.material.color;
 
-        // make sure collider is SOLID (not trigger)
         Collider col = GetComponent<Collider>();
         col.isTrigger = false;
     }
@@ -30,43 +29,47 @@ public class SupportCube : MonoBehaviour
     {
         if (rend == null) return;
 
-        // simple blink by changing alpha
         float t = (Mathf.Sin(Time.time * blinkSpeed) + 1f) * 0.5f;
         float a = Mathf.Lerp(minAlpha, maxAlpha, t);
+        
+        Debug.Log("Support alpha: " + a);
 
         Color c = baseColor;
         c.a = a;
         rend.material.color = c;
+        
     }
 
-    // called from PlayerMovement when player hits this collider
     public void OnPlayerHit()
     {
+        if (isBreaking) return; 
+
         touchCount++;
 
         if (touchCount < maxTouches)
         {
-            // first (or intermediate) warning
-            UIManager.Instance?.ShowWarning(" You might fall! Your support is weakening.");
+            UIManager.Instance?.ShowWarning("You might fall! Your support is weakening.");
         }
         else
         {
-            // final message
-            UIManager.Instance?.ShowSupportLost(" You lost support – now you’re on your own!");
+            isBreaking = true;
 
-            // disable collider immediately so player can fall
-            Collider col = GetComponent<Collider>();
-            if (col != null)
-                col.enabled = false;
+            UIManager.Instance?.ShowSupportLost("You lost support – now you're on your own!");
 
-            // destroy after short delay (so message can be read)
-            StartCoroutine(DeleteAfterDelay(0.6f));
+            StartCoroutine(RemoveSupportAfterDelay(5f));
         }
     }
 
-    private System.Collections.IEnumerator DeleteAfterDelay(float delay)
+    private System.Collections.IEnumerator RemoveSupportAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        // remove collider (player falls)
+        Collider col = GetComponent<Collider>();
+        if (col != null)
+            col.enabled = false;
+
+        // destroy cube
         Destroy(gameObject);
     }
 }

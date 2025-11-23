@@ -1,0 +1,44 @@
+{
+  "positiveIcons": [
+    { "id": "Life_01", "description": "Dance and move your body" },
+    { "id": "Life_02", "description": "Enjoy a warm, mindful meal" },
+    { "id": "Life_03", "description": "Quality time with family" },
+    { "id": "Life_04", "description": "Stay strong and exercise" },
+    { "id": "Life_05", "description": "Relax and recharge on the couch" },
+    { "id": "Life_06", "description": "Dress smart and feel confident" },
+    { "id": "Life_07", "description": "Travel and explore new places" },
+    { "id": "Life_08", "description": "Spend time in nature" },
+    { "id": "Life_09", "description": "Get enough restful sleep" },
+    { "id": "Life_10", "description": "Play and bond with your pets" },
+    { "id": "Life_11", "description": "Share love and romance with your partner" },
+    { "id": "Life_12", "description": "Be present and care for your child" },
+    { "id": "Life_13", "description": "Keep close, supportive friendships" },
+    { "id": "Life_14", "description": "Feel good about your work and progress" },
+    { "id": "Life_15", "description": "Talk to a professional when you need help" },
+    { "id": "Life_16", "description": "Enjoy a movie or show and unwind" },
+    { "id": "Life_17", "description": "Go on fun trips and adventures" },
+    { "id": "Life_18", "description": "Keep learning and growing every day" }
+  ],
+
+  "negativeIcons": [
+    { "id": "Work_22", "description": "Stress from constant numbers and calculations" },
+    { "id": "Work_23", "description": "Working in a stressful, polluted environment" },
+    { "id": "Work_24", "description": "Carrying worries and emotional exhaustion" },
+    { "id": "Work_13", "description": "Stuck in the corporate grind all the time" },
+    { "id": "Work_14", "description": "Endless screen time and notification overload" },
+    { "id": "Work_17", "description": "Work identity taking over your whole life" },
+    { "id": "Work_18", "description": "Debt and financial pressure exploding" },
+    { "id": "Work_19", "description": "Frustration and burnout from work problems" },
+    { "id": "Work_20", "description": "Arguments at home because of work stress" },
+    { "id": "Work_21", "description": "Total burnout and zero energy from overwork" },
+
+    { "id": "Work_29", "description": "Stress from constant calls and crises" },
+    { "id": "Work_30", "description": "Drowning in paperwork and tasks" },
+    { "id": "Work_31", "description": "Big unpaid bills causing money stress" },
+    { "id": "Work_32", "description": "Unhealthy habit: smoking away the stress" },
+    { "id": "Work_25", "description": "Always at your desk, no time to move" },
+    { "id": "Work_26", "description": "Constant shouting and conflicts with others" },
+    { "id": "Work_27", "description": "Working so late you pass out at the desk" },
+    { "id": "Work_28", "description": "Exhausted and demotivated at work" }
+  ]
+}
