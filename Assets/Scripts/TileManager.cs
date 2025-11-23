@@ -33,7 +33,7 @@ public class TileManager : MonoBehaviour
 
     private readonly string[] negativeTexts = new string[]
     {
-        "Late night overwork", "Skipping meals", "No activity", "Constant stress",
+        "Late night overwork", "Skipping meals", "Bed Drowning", "Constant stress",
         "No breaks", "Doomscrolling", "Always online", "Poor sleep",
         "Too much caffeine", "Procrastination", "Multitasking", "No vacations",
         "Working in bed", "Comparing others", "Staying inside", "Ignoring health",

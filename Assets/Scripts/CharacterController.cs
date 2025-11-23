@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip negativeClip;
 
     [Header("Fall Settings")]
-    public float fallGameOverHeight = 0f;  // lower than your support cube
+    public float fallGameOverHeight = 0f;  
 
     private CharacterController controller;
     private Vector3 velocity;
@@ -44,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // GAME OVER BY FALL (only after we go below support)
         if (transform.position.y < fallGameOverHeight)
         {
             UIManager.Instance?.TriggerGameOver(totalScore);
@@ -63,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        if (z < 0) z = 0;   // no backwards
+        if (z < 0) z = 0;   
 
         Vector3 move = transform.right * x + transform.forward * z;
 
@@ -107,15 +106,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        // 1) Check support cube first
         SupportCube support = hit.collider.GetComponent<SupportCube>();
         if (support != null)
         {
             support.OnPlayerHit();
-            return;  // don't treat it as a score tile
+            return;  
         }
 
-        // 2) Normal tile logic
+        
         Tile tile = hit.collider.GetComponent<Tile>();
         if (tile == null) return;
 
