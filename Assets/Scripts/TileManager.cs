@@ -6,61 +6,38 @@ public class TileManager : MonoBehaviour
     public int positivesToPlace = 18;
     public int negativesToPlace = 18;
 
-    [Header("Tile Visuals")]
-    public Material glassMaterial;      
-    public Sprite positiveIconSprite;    // + tile icon
-    public Sprite negativeIconSprite;    // - tile icon
+    [Header("Tile Materials")]
+    public Material glassMaterial;
 
-    [Range(0.1f, 1f)]
-    public float iconSizePercent = 0.8f; 
+    [Header("Tile Cover Sprites")]
+    public Sprite[] positiveTileIcons;  
+    public Sprite[] negativeTileIcons;  
 
-    public float iconYOffset = 0.18f;    
-       
+    [Header("Icon Settings")]
+    [Range(0.3f, 1f)]
+    public float iconSizePercent = 0.85f;
+
+    public float iconYOffset = 0.21f;
 
     private Tile[] tiles;
 
+    // 18 texts each
     private readonly string[] positiveTexts = new string[]
     {
-        "Daily exercise",
-        "Healthy meals",
-        "Regular sleep",
-        "Short breaks",
-        "Saying 'no'",
-        "Delegating tasks",
-        "Time-blocking work",
-        "Weekend family time",
-        "Hobbies & creativity",
-        "Clear boundaries",
-        "Meditation & breathing",
-        "Staying hydrated",
-        "Planning your day",
-        "Taking vacations",
-        "Social time with friends",
-        "Organized workspace",
-        "Listening to music",
-        "Logging off after work"
+        "Daily exercise", "Healthy meals", "Regular sleep", "Short breaks",
+        "Saying 'no'", "Delegating tasks", "Time-blocking", "Family weekends",
+        "Hobbies & creativity", "Clear boundaries", "Meditation", "Hydration",
+        "Planning ahead", "Vacations", "Social friends", "Organized desk",
+        "Listening to music", "Logging off after work"
     };
 
     private readonly string[] negativeTexts = new string[]
     {
-        "Overworking late nights",
-        "Skipping meals",
-        "No physical activity",
-        "Constant stress",
-        "No breaks",
-        "Doomscrolling",
-        "Always online for work",
-        "Poor sleep habits",
-        "Too much caffeine",
-        "Procrastination",
-        "Too much multitasking",
-        "Skipping vacations",
-        "Working from bed",
-        "Comparing to others",
-        "Staying inside all day",
-        "Ignoring mental health",
-        "Toxic work pressure",
-        "Neglecting family & friends"
+        "Late night overwork", "Skipping meals", "No activity", "Constant stress",
+        "No breaks", "Doomscrolling", "Always online", "Poor sleep",
+        "Too much caffeine", "Procrastination", "Multitasking", "No vacations",
+        "Working in bed", "Comparing others", "Staying inside", "Ignoring health",
+        "Toxic pressure", "Neglecting family"
     };
 
     void Start()
@@ -69,33 +46,52 @@ public class TileManager : MonoBehaviour
         AssignValuesAndIcons();
     }
 
-    void AssignValuesAndIcons()
+    List<Sprite> BuildRepeatedList(Sprite[] baseList)
     {
-        List<int> values = new List<int>();
+        List<Sprite> result = new List<Sprite>();
+        foreach (Sprite s in baseList)
+        {
+            result.Add(s);
+            result.Add(s); 
+        }
+        return result;
+    }
 
-        for (int i = 0; i < positivesToPlace; i++)
-            values.Add(2);
-
-        for (int i = 0; i < negativesToPlace; i++)
-            values.Add(-2);
-
-        for (int i = values.Count - 1; i > 0; i--)
+    void Shuffle<T>(List<T> list)
+    {
+        for (int i = list.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
-            (values[i], values[j]) = (values[j], values[i]);
+            (list[i], list[j]) = (list[j], list[i]);
         }
+    }
 
-        int posCount = 0, negCount = 0;
-        int posLabelIndex = 0, negLabelIndex = 0;
+    void AssignValuesAndIcons()
+    {
+        var posIcons = BuildRepeatedList(positiveTileIcons);
+        var negIcons = BuildRepeatedList(negativeTileIcons);
+
+        Shuffle(posIcons);
+        Shuffle(negIcons);
+
+        List<int> values = new List<int>();
+
+        for (int i = 0; i < positivesToPlace; i++) values.Add(2);
+        for (int i = 0; i < negativesToPlace; i++) values.Add(-2);
+
+        Shuffle(values);
+
+        int posIndex = 0;
+        int negIndex = 0;
 
         for (int i = 0; i < tiles.Length; i++)
         {
             Tile t = tiles[i];
-
             t.Id = i;
             int v = values[i];
             t.SetValue(v);
 
+            // assign material
             var rend = t.GetComponent<Renderer>();
             if (rend != null && glassMaterial != null)
             {
@@ -103,72 +99,53 @@ public class TileManager : MonoBehaviour
                 t.baseMat = glassMaterial;
             }
 
+            Sprite cover = null;
+
             if (v > 0)
             {
-                t.Description = positiveTexts[posLabelIndex % positiveTexts.Length];
-                posLabelIndex++;
-                posCount++;
+                t.Description = positiveTexts[posIndex];
+                cover = posIcons[posIndex];
+                posIndex++;
             }
             else
             {
-                t.Description = negativeTexts[negLabelIndex % negativeTexts.Length];
-                negLabelIndex++;
-                negCount++;
+                t.Description = negativeTexts[negIndex];
+                cover = negIcons[negIndex];
+                negIndex++;
             }
 
-            CreateIconForTile(t);
+            CreateIconForTile(t, cover);
         }
-
-        Debug.Log($"RESULT: {posCount} positive tiles, {negCount} negative tiles.");
     }
 
-    void CreateIconForTile(Tile tile)
+    void CreateIconForTile(Tile tile, Sprite assignedSprite)
     {
-    if (positiveIconSprite == null || negativeIconSprite == null)
-    {
-        Debug.LogWarning("TileManager: positive/negative icon sprites are not assigned.");
-        return;
+        GameObject iconGO = new GameObject("TileCover");
+        iconGO.transform.SetParent(tile.transform);
+
+        BoxCollider col = tile.GetComponent<BoxCollider>();
+
+        float width = col.size.x * tile.transform.localScale.x;
+        float depth = col.size.z * tile.transform.localScale.z;
+
+        iconGO.transform.localPosition = new Vector3(0, iconYOffset, 0);
+        iconGO.transform.localRotation = Quaternion.Euler(90, 0, 0);
+
+        SpriteRenderer sr = iconGO.AddComponent<SpriteRenderer>();
+        sr.sprite = assignedSprite;
+        sr.sortingOrder = 10;
+        sr.color = Color.white; 
+        Vector2 s = assignedSprite.bounds.size;
+
+        float targetW = width * iconSizePercent;
+        float targetD = depth * iconSizePercent;
+
+        iconGO.transform.localScale = new Vector3(
+            targetW / s.x,
+            targetD / s.y,
+            1f
+        );
+
+        tile.iconRenderer = sr;
     }
-
-    GameObject iconGO = new GameObject("TileIcon");
-    iconGO.transform.SetParent(tile.transform);
-
-    BoxCollider col = tile.GetComponent<BoxCollider>();
-    float width, height, depth;
-
-    if (col != null)
-    {
-        width  = col.size.x * tile.transform.localScale.x;
-        height = col.size.y * tile.transform.localScale.y;
-        depth  = col.size.z * tile.transform.localScale.z;
-    }
-    else
-    {
-        width  = tile.transform.localScale.x;
-        height = tile.transform.localScale.y;
-        depth  = tile.transform.localScale.z;
-    }
-
-    iconGO.transform.localPosition = new Vector3(0f, iconYOffset, 0f);
-
-    iconGO.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
-
-    SpriteRenderer sr = iconGO.AddComponent<SpriteRenderer>();
-    sr.sprite = tile.Value > 0 ? positiveIconSprite : negativeIconSprite;
-    sr.sortingOrder = 10;
-    sr.drawMode = SpriteDrawMode.Simple;
-
-    Vector2 spriteWorldSize = sr.sprite.bounds.size;
-
-    float targetWidth  = width  * iconSizePercent;
-    float targetDepth  = depth  * iconSizePercent;
-
-    float scaleX = targetWidth  / spriteWorldSize.x;
-    float scaleY = targetDepth  / spriteWorldSize.y;
-
-    iconGO.transform.localScale = new Vector3(scaleX, scaleY, 1f);
-
-    tile.iconRenderer = sr;
-    }
-
 }

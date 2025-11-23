@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -28,6 +29,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI gameOverMessageText;
     [SerializeField] private Image gameOverImage;      
     [SerializeField] private float restartDelay = 3f;  
+
+    [Header("Game Over Animation")]
+    [SerializeField] private Sprite[] fireFrames;   
+    [SerializeField] private float fireFrameTime = 0.15f;
+
+    private Coroutine fireAnimationRoutine;
+
 
     private Coroutine blinkRoutine;
 
@@ -141,6 +149,12 @@ public class UIManager : MonoBehaviour
                 : "You burned out on negatives.\nBalance is broken.";
         }
 
+    if (fireAnimationRoutine != null)
+        StopCoroutine(fireAnimationRoutine);
+
+    fireAnimationRoutine = StartCoroutine(PlayFireAnimation());
+
+
 
         StartCoroutine(RestartAfterDelay());
     }
@@ -152,4 +166,32 @@ public class UIManager : MonoBehaviour
         Scene current = SceneManager.GetActiveScene();
         SceneManager.LoadScene(current.buildIndex);
     }
+
+    public void ShowWarning(string msg)
+    {
+        lastEventText.text = msg;
+        lastEventText.color = Color.yellow;
+    }
+
+    private IEnumerator PlayFireAnimation()
+{
+    if (gameOverImage == null || fireFrames == null || fireFrames.Length == 0)
+        yield break;
+
+    int index = 0;
+
+    while (true)
+    {
+        gameOverImage.sprite = fireFrames[index];
+        index = (index + 1) % fireFrames.Length;   // alternate frames
+        yield return new WaitForSeconds(fireFrameTime);
+    }
+}
+
+public void ShowSupportLost(string msg)
+    {
+        lastEventText.text = msg;
+        lastEventText.color = Color.red;
+    }
+
 }
