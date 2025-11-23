@@ -18,6 +18,7 @@ public class SupportCube : MonoBehaviour
     void Start()
     {
         rend = GetComponent<MeshRenderer>();
+        Debug.Log("rend" + rend);
         if (rend != null)
             baseColor = rend.material.color;
 

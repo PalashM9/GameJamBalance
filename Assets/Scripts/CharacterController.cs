@@ -112,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
             return; 
         }
 
-        // 2) Normal tile logic
+        
         Tile tile = hit.collider.GetComponent<Tile>();
         if (tile == null) return;
 

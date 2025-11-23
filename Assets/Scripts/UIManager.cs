@@ -74,10 +74,9 @@ public class UIManager : MonoBehaviour
         positiveCountText.text = $"+ Tiles: {positiveHits}";
         negativeCountText.text = $"- Tiles: {negativeHits}";
 
-        // SCALE
+     
         UpdateScaleVisual(positiveHits, negativeHits);
 
-        // BLINK
         if (blinkRoutine != null)
             StopCoroutine(blinkRoutine);
 
@@ -183,7 +182,7 @@ public class UIManager : MonoBehaviour
     while (true)
     {
         gameOverImage.sprite = fireFrames[index];
-        index = (index + 1) % fireFrames.Length;   // alternate frames
+        index = (index + 1) % fireFrames.Length;  
         yield return new WaitForSeconds(fireFrameTime);
     }
 }
