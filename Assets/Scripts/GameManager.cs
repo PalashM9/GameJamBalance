@@ -18,6 +18,5 @@ public class GameManager : MonoBehaviour
     {
         balance += amount;
         Debug.Log("Balance = " + balance);
-        // later: update UI here
     }
 }

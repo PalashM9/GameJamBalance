@@ -23,7 +23,7 @@ public class CameraSwitcher : MonoBehaviour
 
     void SwitchCamera()
     {
-        mainCamera.gameObject.SetActive(false);  // Disable main camera
-        playerCamera.gameObject.SetActive(true); // Enable player camera
+        mainCamera.gameObject.SetActive(false);  
+        playerCamera.gameObject.SetActive(true); 
     }
 }

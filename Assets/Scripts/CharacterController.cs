@@ -18,7 +18,11 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip negativeClip;
 
     [Header("Fall Settings")]
-    public float fallGameOverHeight = 0f; 
+    public float fallGameOverHeight = 0f;
+
+    [Header("Animation")]
+    public Animator animator;   // <--- add this in Inspector (or GetComponentInChildren)
+
     private CharacterController controller;
     private Vector3 velocity;
     private bool isGrounded;
@@ -37,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (audioSource == null)
             audioSource = gameObject.AddComponent<AudioSource>();
+
+        if (animator == null)
+            animator = GetComponentInChildren<Animator>();   // safety
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -61,13 +68,15 @@ public class PlayerMovement : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
-        if (z < 0) z = 0;   
+        // don't move backwards
+        if (z < 0) z = 0;
 
         Vector3 move = transform.right * x + transform.forward * z;
 
         if (!isJumpingForward)
             controller.Move(move * speed * Time.deltaTime);
 
+        // ----- Jump input -----
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             if (jumpClip != null)
@@ -78,10 +87,23 @@ public class PlayerMovement : MonoBehaviour
             bool wantsForward = z > 0.1f;
             if (wantsForward && !isJumpingForward)
                 StartCoroutine(ForwardHop());
+
+            // trigger jump animation
+            if (animator != null)
+                animator.SetTrigger("Jump");
         }
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        // ----- ANIMATOR PARAMETERS -----
+        if (animator != null)
+        {
+            // how much the player is trying to move
+            float inputMagnitude = new Vector2(x, z).magnitude;
+            animator.SetFloat("Speed", inputMagnitude);
+            animator.SetBool("IsGrounded", isGrounded);
+        }
     }
 
     private System.Collections.IEnumerator ForwardHop()
@@ -109,13 +131,11 @@ public class PlayerMovement : MonoBehaviour
         if (support != null)
         {
             support.OnPlayerHit();
-            return; 
+            return;
         }
 
-        
         Tile tile = hit.collider.GetComponent<Tile>();
         if (tile == null) return;
-
         if (tile.IsConsumed) return;
 
         tile.RevealPermanent();
